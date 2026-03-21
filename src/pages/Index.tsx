@@ -1,55 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
 const HERO_IMAGE = "https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/files/e18b860e-30ff-4877-a02e-414bbb761243.jpg";
 const CONSTRUCTION_IMAGE = "https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/files/868e0c41-3e50-48fc-a101-2426ca3ae652.jpg";
+const API_URL = "https://functions.poehali.dev/940ade06-db06-4bd7-b2b8-fcc18e948946";
 
-const projects = [
-  {
-    id: 1,
-    name: "Поставка медицинского оборудования",
-    client: "Министерство здравоохранения",
-    amount: "48 500 000 ₽",
-    yield: "28%",
-    term: "5 мес.",
-    progress: 65,
-    status: "Активный",
-    category: "Оборудование",
-  },
-  {
-    id: 2,
-    name: "Монтаж инженерных систем ТЦ",
-    client: "ГК «Девелопмент-Юг»",
-    amount: "73 200 000 ₽",
-    yield: "31%",
-    term: "6 мес.",
-    progress: 40,
-    status: "Активный",
-    category: "СМР",
-  },
-  {
-    id: 3,
-    name: "Закуп строительной техники",
-    client: "ООО «ДорСтрой»",
-    amount: "29 100 000 ₽",
-    yield: "26%",
-    term: "4 мес.",
-    progress: 85,
-    status: "Завершается",
-    category: "Оборудование",
-  },
-  {
-    id: 4,
-    name: "Электромонтажные работы АЭС",
-    client: "Росатом",
-    amount: "142 000 000 ₽",
-    yield: "34%",
-    term: "8 мес.",
-    progress: 20,
-    status: "Новый",
-    category: "СМР",
-  },
-];
+interface Project {
+  id: number;
+  name: string;
+  client: string;
+  category: string;
+  amount: number;
+  yield_pct: number;
+  term_months: number;
+  progress: number;
+  status: string;
+}
 
 const faqs = [
   {
@@ -84,6 +50,15 @@ export default function Index() {
   const [months, setMonths] = useState(6);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState("all");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [projectsLoading, setProjectsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(API_URL)
+      .then(r => r.json())
+      .then(data => { setProjects(data); setProjectsLoading(false); })
+      .catch(() => setProjectsLoading(false));
+  }, []);
 
   const profit = Math.round((amount * (rate / 100) * (months / 12)));
   const total = amount + profit;
@@ -399,61 +374,77 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {filteredProjects.map((p) => (
-              <div key={p.id} className="card-invest p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="tag">{p.category}</span>
-                      <span
-                        className={`tag ${
-                          p.status === "Завершается"
-                            ? "bg-green-500/10 border-green-500/30 text-green-400"
-                            : p.status === "Новый"
-                            ? "bg-blue-500/10 border-blue-500/30 text-blue-400"
-                            : ""
-                        }`}
-                      >
-                        {p.status}
-                      </span>
+          {projectsLoading ? (
+            <div className="grid md:grid-cols-2 gap-6">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="card-invest p-6 animate-pulse">
+                  <div className="h-4 bg-border rounded mb-3 w-2/3" />
+                  <div className="h-6 bg-border rounded mb-2 w-full" />
+                  <div className="h-4 bg-border rounded w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : filteredProjects.length === 0 ? (
+            <div className="text-center py-16 text-muted-foreground font-body border border-dashed border-border">
+              Проекты не найдены
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-6">
+              {filteredProjects.map((p) => (
+                <div key={p.id} className="card-invest p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="tag">{p.category}</span>
+                        <span
+                          className={`tag ${
+                            p.status === "Завершается"
+                              ? "bg-green-500/10 border-green-500/30 text-green-400"
+                              : p.status === "Новый"
+                              ? "bg-blue-500/10 border-blue-500/30 text-blue-400"
+                              : ""
+                          }`}
+                        >
+                          {p.status}
+                        </span>
+                      </div>
+                      <h3 className="font-display text-xl font-semibold mb-1">{p.name}</h3>
+                      <p className="text-sm text-muted-foreground font-body">{p.client}</p>
                     </div>
-                    <h3 className="font-display text-xl font-semibold mb-1">{p.name}</h3>
-                    <p className="text-sm text-muted-foreground font-body">{p.client}</p>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-3 gap-4 mb-5">
-                  <div>
-                    <div className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-1">Объём</div>
-                    <div className="font-body font-semibold text-sm">{p.amount}</div>
+                  <div className="grid grid-cols-3 gap-4 mb-5">
+                    <div>
+                      <div className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-1">Объём</div>
+                      <div className="font-body font-semibold text-sm">{formatMln(p.amount)}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-1">Доходность</div>
+                      <div className="font-display text-lg font-bold text-gold">{p.yield_pct}%</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-1">Срок</div>
+                      <div className="font-body font-semibold text-sm">{p.term_months} мес.</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-1">Доходность</div>
-                    <div className="font-display text-lg font-bold text-gold">{p.yield}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-1">Срок</div>
-                    <div className="font-body font-semibold text-sm">{p.term}</div>
-                  </div>
-                </div>
 
-                <div className="mb-4">
-                  <div className="flex justify-between text-xs text-muted-foreground font-body mb-2">
-                    <span>Исполнение</span>
-                    <span>{p.progress}%</span>
+                  <div className="mb-4">
+                    <div className="flex justify-between text-xs text-muted-foreground font-body mb-2">
+                      <span>Исполнение</span>
+                      <span>{p.progress}%</span>
+                    </div>
+                    <div className="progress-bar">
+                      <div className="progress-fill" style={{ width: `${p.progress}%` }} />
+                    </div>
                   </div>
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: `${p.progress}%` }} />
-                  </div>
-                </div>
 
-                <button className="w-full py-2.5 border border-border text-xs font-body font-semibold uppercase tracking-wider text-muted-foreground hover:border-gold hover:text-gold transition-all">
-                  Подробнее о проекте
-                </button>
-              </div>
-            ))}
-          </div>
+                  <button className="w-full py-2.5 border border-border text-xs font-body font-semibold uppercase tracking-wider text-muted-foreground hover:border-gold hover:text-gold transition-all">
+                    Подробнее о проекте
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

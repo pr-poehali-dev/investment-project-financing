@@ -292,6 +292,39 @@
     );
   }
 
+  .field-label {
+    display: block;
+    font-size: 0.7rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 0.4rem;
+  }
+
+  .field-input {
+    width: 100%;
+    background: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
+    padding: 0.65rem 0.9rem;
+    font-size: 0.875rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: hsl(var(--foreground));
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .field-input:focus {
+    border-color: hsl(var(--gold) / 0.5);
+  }
+
+  .field-input::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+
   input[type="range"] {
     -webkit-appearance: none;
     appearance: none;

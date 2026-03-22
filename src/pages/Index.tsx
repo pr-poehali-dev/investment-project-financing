@@ -911,11 +911,9 @@ export default function Index() {
               © 2025 ООО «Стайл». КонтрактИнвест — организатор сделок контрактного финансирования.
             </div>
             <div className="flex gap-6">
-              {["Политика конфиденциальности", "Оферта"].map((l) => (
-                <a key={l} href="#" className="text-xs text-muted-foreground hover:text-gold transition-colors font-body">
-                  {l}
-                </a>
-              ))}
+              <a href="/privacy" className="text-xs text-muted-foreground hover:text-gold transition-colors font-body">
+                Политика конфиденциальности
+              </a>
             </div>
           </div>
         </div>

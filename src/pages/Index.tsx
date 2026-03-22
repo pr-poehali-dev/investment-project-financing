@@ -838,14 +838,14 @@ export default function Index() {
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-muted-foreground font-body uppercase tracking-wider block mb-2">Телефон / Telegram</label>
+                    <label className="text-xs text-muted-foreground font-body uppercase tracking-wider block mb-2">Как с вами связаться</label>
                     <input
                       type="text"
                       required
                       value={formData.phone}
                       onChange={e => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full bg-background border border-border px-4 py-3 text-sm font-body focus:outline-none focus:border-[hsl(var(--gold)/0.6)] transition-colors"
-                      placeholder="+7 (___) ___-__-__"
+                      placeholder="Телефон, email или любой удобный способ"
                     />
                   </div>
                   <div>

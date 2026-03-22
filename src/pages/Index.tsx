@@ -638,7 +638,7 @@ export default function Index() {
               { num: "₽2.4 млрд", label: "Объём сопровождённых сделок", icon: "TrendingUp", change: "+18%" },
               { num: "143", label: "Завершённых проектов", icon: "CheckCircle", change: "100% расчётов" },
               { num: "4–8 мес.", label: "Средний срок сделки", icon: "BarChart2", change: "Строительство и СМР" },
-              { num: "50+ млн", label: "Максимальный контракт", icon: "Users", change: "Инфраструктура" },
+              { num: "253+ млн", label: "Максимальный контракт", icon: "Users", change: "Инфраструктура" },
             ].map((s) => (
               <div key={s.label} className="card-invest p-6">
                 <div className="flex items-center justify-between mb-4">

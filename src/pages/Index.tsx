@@ -4,6 +4,7 @@ import Icon from "@/components/ui/icon";
 const HERO_IMAGE = "https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/files/e18b860e-30ff-4877-a02e-414bbb761243.jpg";
 const CONSTRUCTION_IMAGE = "https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/files/868e0c41-3e50-48fc-a101-2426ca3ae652.jpg";
 const API_URL = "https://functions.poehali.dev/940ade06-db06-4bd7-b2b8-fcc18e948946";
+const CONTACT_URL = "https://functions.poehali.dev/2ee853df-9158-4010-938e-0d9b9ace153e";
 
 interface Project {
   id: number;
@@ -80,8 +81,13 @@ export default function Index() {
     return `${n} ₽`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await fetch(CONTACT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
     setFormSent(true);
   };
 

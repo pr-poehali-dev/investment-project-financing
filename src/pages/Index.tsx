@@ -232,12 +232,12 @@ export default function Index() {
             </div>
             <div className="relative">
               <img
-                src={CONSTRUCTION_IMAGE}
+                src="https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/bucket/93271db9-ca8b-43d0-9add-b3b8602b0d80.jpg"
                 alt="Строительство"
-                className="w-full h-96 object-cover"
+                className="w-full h-96 object-cover object-top"
               />
               <div className="absolute -bottom-6 -left-6 bg-card border border-border p-6 w-56">
-                <div className="text-3xl font-display font-bold text-gold mb-1">50 млн ₽</div>
+                <div className="text-3xl font-display font-bold text-gold mb-1">65 млн ₽</div>
                 <div className="text-xs text-muted-foreground font-body uppercase tracking-widest">
                   Пример контракта<br />в сопровождении
                 </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_IMAGE = "https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/files/e18b860e-30ff-4877-a02e-414bbb761243.jpg";
+const HERO_IMAGE = "https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/bucket/b5255cbe-8faa-48df-b2fb-f08fa1e627f2.jpg";
 const CONSTRUCTION_IMAGE = "https://cdn.poehali.dev/projects/6c5f0413-1283-4f01-907d-771ff3b2886d/files/868e0c41-3e50-48fc-a101-2426ca3ae652.jpg";
 const API_URL = "https://functions.poehali.dev/940ade06-db06-4bd7-b2b8-fcc18e948946";
 const CONTACT_URL = "https://functions.poehali.dev/2ee853df-9158-4010-938e-0d9b9ace153e";
@@ -129,10 +129,11 @@ export default function Index() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+          className="absolute inset-0 bg-cover bg-center bg-top"
+          style={{ backgroundImage: `url(${HERO_IMAGE})`, opacity: 0.18 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--navy))] via-[hsl(220_30%_6%/0.85)] to-transparent" />
+        <div className="absolute inset-0 bg-[hsl(var(--navy))]" style={{ opacity: 0.72 }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--navy))] via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy))] via-transparent to-transparent" />
 
         <div className="relative container max-w-7xl mx-auto px-6 py-24">

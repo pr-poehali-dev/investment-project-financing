@@ -908,7 +908,7 @@ export default function Index() {
           <div className="divider" />
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8">
             <div className="text-xs text-muted-foreground font-body">
-              © 2025 ООО «Стайл». КонтрактИнвест — организатор сделок контрактного финансирования.
+              © 2026 ООО «Стайл». КонтрактИнвест — организатор сделок контрактного финансирования.
             </div>
             <div className="flex gap-6">
               <a href="/privacy" className="text-xs text-muted-foreground hover:text-gold transition-colors font-body">

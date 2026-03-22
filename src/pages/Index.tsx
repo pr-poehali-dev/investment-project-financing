@@ -757,7 +757,19 @@ export default function Index() {
               </p>
               <div className="space-y-4 mb-8">
                 <a
-                  href="https://t.me/kontraktinvest"
+                  href="tel:+79132024444"
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[hsl(var(--gold)/0.1)] border border-[hsl(var(--gold)/0.2)] group-hover:bg-[hsl(var(--gold)/0.2)] transition-all">
+                    <Icon name="Phone" size={16} className="text-gold" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold font-body group-hover:text-gold transition-colors">Телефон</div>
+                    <div className="text-xs text-muted-foreground font-body">+7 (913) 202-44-44</div>
+                  </div>
+                </a>
+                <a
+                  href="https://t.me/investments_realty"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 group"
@@ -766,22 +778,20 @@ export default function Index() {
                     <Icon name="Send" size={16} className="text-gold" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold font-body group-hover:text-gold transition-colors">Telegram</div>
-                    <div className="text-xs text-muted-foreground font-body">@kontraktinvest</div>
+                    <div className="text-sm font-semibold font-body group-hover:text-gold transition-colors">Telegram-канал</div>
+                    <div className="text-xs text-muted-foreground font-body">@investments_realty</div>
                   </div>
                 </a>
                 <a
-                  href="https://wa.me/79000000000"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:viktor_kutakov@vk.com"
                   className="flex items-center gap-4 group"
                 >
                   <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[hsl(var(--gold)/0.1)] border border-[hsl(var(--gold)/0.2)] group-hover:bg-[hsl(var(--gold)/0.2)] transition-all">
-                    <Icon name="MessageCircle" size={16} className="text-gold" />
+                    <Icon name="Mail" size={16} className="text-gold" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold font-body group-hover:text-gold transition-colors">WhatsApp</div>
-                    <div className="text-xs text-muted-foreground font-body">+7 (900) 000-00-00</div>
+                    <div className="text-sm font-semibold font-body group-hover:text-gold transition-colors">Email</div>
+                    <div className="text-xs text-muted-foreground font-body">viktor_kutakov@vk.com</div>
                   </div>
                 </a>
               </div>

@@ -55,6 +55,7 @@ export default function Index() {
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
   const [formSent, setFormSent] = useState(false);
+  const [pdConsent, setPdConsent] = useState(false);
 
   useEffect(() => {
     fetch(API_URL)
@@ -858,7 +859,24 @@ export default function Index() {
                       placeholder="Подрядчик / Инвестор, объём, отрасль..."
                     />
                   </div>
-                  <button type="submit" className="btn-gold w-full py-4 text-sm">
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="pd-consent"
+                      required
+                      checked={pdConsent}
+                      onChange={e => setPdConsent(e.target.checked)}
+                      className="mt-0.5 w-4 h-4 flex-shrink-0 accent-[hsl(var(--gold))] cursor-pointer"
+                    />
+                    <label htmlFor="pd-consent" className="text-xs text-muted-foreground font-body leading-relaxed cursor-pointer">
+                      Я даю согласие на обработку персональных данных в соответствии с{" "}
+                      <a href="/privacy" target="_blank" className="text-gold underline underline-offset-2 hover:opacity-80 transition-opacity">
+                        Политикой конфиденциальности
+                      </a>
+                      . Данные хранятся на серверах, расположенных на территории Российской Федерации, и не передаются третьим лицам.
+                    </label>
+                  </div>
+                  <button type="submit" disabled={!pdConsent} className="btn-gold w-full py-4 text-sm disabled:opacity-40 disabled:cursor-not-allowed">
                     Отправить заявку
                   </button>
                 </form>

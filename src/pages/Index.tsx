@@ -19,28 +19,28 @@ interface Project {
 
 const faqs = [
   {
-    q: "Как гарантирована доходность?",
-    a: "Контракты уже выиграны и подписаны с заказчиками — государственными структурами и крупными компаниями. Оплата по контракту покрывает возврат инвестиций и прибыль инвестора. Дополнительно мы оформляем обеспечительные меры: залог, поручительство, страхование.",
+    q: "Кто участвует в сделке?",
+    a: "Участников двое: инвестор (или партнёр) и подрядчик, у которого есть контракт. Мы выступаем организатором — находим стороны, структурируем сделку и сопровождаем весь процесс. Деньги всегда движутся напрямую между участниками.",
   },
   {
     q: "Что такое контрактное финансирование?",
-    a: "Это модель, при которой инвестор финансирует исполнение уже заключённого государственного или корпоративного контракта. Подрядчик выиграл тендер, но для закупки оборудования или начала работ нужны оборотные средства. Инвестор предоставляет их и получает фиксированный доход.",
+    a: "Подрядчик выиграл тендер, но для закупки оборудования или старта работ нужны оборотные средства. Инвестор или партнёр предоставляет финансирование напрямую подрядчику — через договор займа, поставки или агентскую схему. По исполнении контракта происходит расчёт.",
   },
   {
-    q: "Каков минимальный размер инвестиций?",
-    a: "Минимальный порог входа — 1 000 000 рублей. Для крупных контрактов возможны совместные инвестиции нескольких участников.",
+    q: "Какова роль ООО «Стайл»?",
+    a: "Мы — организатор сделок. Не принимаем деньги в управление, не формируем общий фонд, не осуществляем лицензируемую деятельность. Наша задача — свести стороны, структурировать договор и сопроводить сделку от начала до расчёта.",
   },
   {
-    q: "Как проходит верификация инвестора (KYC)?",
-    a: "Процесс занимает 1–2 рабочих дня: заполнение анкеты, подтверждение личности (паспорт), подтверждение источника средств. После верификации открывается доступ ко всем проектам и документам.",
+    q: "Как определяются финансовые условия?",
+    a: "Финансовые условия и возможная доходность определяются параметрами конкретного проекта и согласовываются сторонами индивидуально — после предварительного отбора и обсуждения.",
   },
   {
-    q: "Как выплачивается доход?",
-    a: "Доход выплачивается единовременно по завершении контракта вместе с телом инвестиции. Возможна частичная выплата по этапам — оговаривается индивидуально.",
+    q: "Кому это подходит?",
+    a: "Бизнесу, которому нужен оборотный капитал для исполнения контрактов или банковские гарантии. Инвесторам и партнёрам, готовым к участию в реальных проектах со структурированной экономикой.",
   },
   {
-    q: "Можно ли досрочно выйти из проекта?",
-    a: "Досрочный выход возможен через переуступку права требования другому инвестору с нашей площадки. Мы помогаем организовать этот процесс.",
+    q: "Как начать работу?",
+    a: "Оставьте заявку через форму или напишите в Telegram / WhatsApp. Мы проведём предварительное обсуждение, расскажем о текущих проектах и согласуем условия участия.",
   },
 ];
 
@@ -52,6 +52,8 @@ export default function Index() {
   const [activeTab, setActiveTab] = useState("all");
   const [projects, setProjects] = useState<Project[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
+  const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
+  const [formSent, setFormSent] = useState(false);
 
   useEffect(() => {
     fetch(API_URL)
@@ -78,6 +80,11 @@ export default function Index() {
     return `${n} ₽`;
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSent(true);
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* NAV */}
@@ -93,8 +100,9 @@ export default function Index() {
           </div>
           <nav className="hidden lg:flex items-center gap-8">
             {[
-              ["О платформе", "#about"],
-              ["Инвестиции", "#invest"],
+              ["О нас", "#about"],
+              ["Как работаем", "#how"],
+              ["Кому подходит", "#who"],
               ["Проекты", "#projects"],
               ["Калькулятор", "#calc"],
               ["Аналитика", "#analytics"],
@@ -106,9 +114,9 @@ export default function Index() {
               </a>
             ))}
           </nav>
-          <button className="btn-gold hidden md:block">
-            Стать инвестором
-          </button>
+          <a href="#contacts" className="btn-gold hidden md:block">
+            Обсудить проект
+          </a>
         </div>
       </header>
 
@@ -124,32 +132,36 @@ export default function Index() {
         <div className="relative container max-w-7xl mx-auto px-6 py-24">
           <div className="max-w-2xl">
             <div className="tag mb-6 animate-fade-in-up opacity-0" style={{ animationFillMode: 'forwards' }}>
-              Контрактное финансирование
+              Организатор сделок
             </div>
             <h1
               className="font-display text-5xl md:text-7xl font-semibold leading-tight mb-6 animate-fade-in-up opacity-0 delay-100"
               style={{ animationFillMode: 'forwards' }}
             >
-              Инвестиции<br />
-              с{" "}
-              <span className="text-gold italic">гарантией</span>
+              Контрактное<br />
+              финансирование и{" "}
+              <span className="text-gold italic">сопровождение</span>
               <br />
-              исполнения
+              сделок
             </h1>
             <p
               className="text-lg text-muted-foreground font-body font-light leading-relaxed mb-10 max-w-lg animate-fade-in-up opacity-0 delay-200"
               style={{ animationFillMode: 'forwards' }}
             >
-              Контракты уже выиграны. Вашим средствам нужна только точка
-              приложения — строительство и оборудование с доходностью{" "}
-              <span className="text-gold font-medium">от 25% годовых</span>.
+              Организуем финансирование исполнения контрактов и соединяем инвесторов с подрядчиками в реальном секторе.
+            </p>
+            <p
+              className="text-base text-muted-foreground font-body font-light leading-relaxed mb-10 max-w-lg animate-fade-in-up opacity-0 delay-200"
+              style={{ animationFillMode: 'forwards' }}
+            >
+              Работаем с реальными проектами в строительстве, энергетике и инфраструктуре.
             </p>
             <div
               className="flex flex-wrap gap-4 mb-16 animate-fade-in-up opacity-0 delay-300"
               style={{ animationFillMode: 'forwards' }}
             >
-              <button className="btn-gold">Начать инвестировать</button>
-              <button className="btn-outline-gold">Узнать подробнее</button>
+              <a href="#contacts" className="btn-gold">Обсудить проект</a>
+              <a href="#how" className="btn-outline-gold">Как это работает</a>
             </div>
 
             <div
@@ -157,9 +169,9 @@ export default function Index() {
               style={{ animationFillMode: 'forwards' }}
             >
               {[
-                { num: "от 25%", label: "Годовых" },
-                { num: "от 4 мес.", label: "Срок инвестиций" },
-                { num: "100%", label: "Контракты выиграны" },
+                { num: "Реальный", label: "Сектор экономики" },
+                { num: "Прямые", label: "Сделки между сторонами" },
+                { num: "Полное", label: "Сопровождение" },
               ].map((s) => (
                 <div key={s.label}>
                   <div className="stat-num mb-1">{s.num}</div>
@@ -182,33 +194,33 @@ export default function Index() {
         <div className="container max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="tag mb-6">О платформе</div>
+              <div className="tag mb-6">О компании</div>
               <h2 className="section-title mb-6">
-                Надёжная модель.<br />
-                <span className="text-gold italic">Проверенные</span> контракты.
+                ООО «Стайл» —<br />
+                <span className="text-gold italic">организатор</span> сделок
               </h2>
               <div className="gold-line mb-8" />
               <p className="text-muted-foreground font-body leading-relaxed mb-6">
-                КонтрактИнвест — инвестиционная платформа, специализирующаяся
-                на финансировании государственных и корпоративных контрактов.
-                Мы работаем с подрядчиками, которые уже выиграли тендеры, но
-                нуждаются в оборотных средствах.
+                Мы организуем финансирование исполнения контрактов и сопровождаем сделки между инвесторами и подрядчиками.
               </p>
-              <p className="text-muted-foreground font-body leading-relaxed mb-10">
-                Ваши инвестиции направляются напрямую на закупку оборудования
-                и финансирование строительно-монтажных работ. Доход фиксирован
-                и обеспечен обязательствами по контракту.
+              <p className="text-muted-foreground font-body leading-relaxed mb-6">
+                Опыт в инвестициях и контрактном финансировании. Работаем с инфраструктурными проектами, участвуем в сопровождении сделок с многомиллионными контрактами.
               </p>
+              <div className="border border-[hsl(var(--gold)/0.3)] bg-[hsl(var(--gold)/0.05)] p-5 mb-8">
+                <p className="text-sm text-muted-foreground font-body leading-relaxed">
+                  <span className="text-gold font-semibold">Важно:</span> Мы не принимаем денежные средства в управление и не осуществляем деятельность, требующую лицензирования. Все сделки заключаются напрямую между участниками (инвестор — подрядчик) на основании договоров.
+                </p>
+              </div>
               <div className="grid grid-cols-2 gap-6">
                 {[
-                  { icon: "ShieldCheck", label: "Верификация KYC", desc: "Полная проверка всех участников" },
-                  { icon: "FileText", label: "Юридическая защита", desc: "Договор инвестирования, залог" },
-                  { icon: "TrendingUp", label: "Прозрачная отчётность", desc: "Финансовые отчёты по каждому проекту" },
-                  { icon: "Lock", label: "Хранилище документов", desc: "Все договоры в одном месте" },
+                  { icon: "Handshake", label: "Организатор сделок", desc: "Структурируем и сопровождаем" },
+                  { icon: "FileText", label: "Прозрачные договоры", desc: "Напрямую между сторонами" },
+                  { icon: "TrendingUp", label: "Реальный сектор", desc: "Строительство, энергетика" },
+                  { icon: "Users", label: "Индивидуальный подход", desc: "Условия под каждый проект" },
                 ].map((f) => (
                   <div key={f.label} className="flex gap-3">
                     <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center bg-[hsl(var(--gold)/0.12)] border border-[hsl(var(--gold)/0.2)]">
-                      <Icon name={f.icon as string} size={16} className="text-gold" />
+                      <Icon name={f.icon as string} size={16} className="text-gold" fallback="Star" />
                     </div>
                     <div>
                       <div className="text-sm font-semibold font-body mb-0.5">{f.label}</div>
@@ -225,9 +237,9 @@ export default function Index() {
                 className="w-full h-96 object-cover"
               />
               <div className="absolute -bottom-6 -left-6 bg-card border border-border p-6 w-56">
-                <div className="text-3xl font-display font-bold text-gold mb-1">₽ 2.4 млрд</div>
+                <div className="text-3xl font-display font-bold text-gold mb-1">50 млн ₽</div>
                 <div className="text-xs text-muted-foreground font-body uppercase tracking-widest">
-                  Профинансировано<br />контрактов
+                  Пример контракта<br />в сопровождении
                 </div>
               </div>
             </div>
@@ -237,103 +249,136 @@ export default function Index() {
 
       <div className="divider" />
 
-      {/* INVEST CONDITIONS */}
-      <section id="invest" className="py-24 bg-background">
+      {/* HOW IT WORKS */}
+      <section id="how" className="py-24 bg-background">
         <div className="container max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="tag mb-5">Условия инвестирования</div>
+            <div className="tag mb-5">Схема работы</div>
             <h2 className="section-title mb-4">
               Как это{" "}
               <span className="text-gold italic">работает</span>
             </h2>
             <p className="text-muted-foreground font-body max-w-xl mx-auto">
-              Простая и прозрачная схема — от верификации до получения дохода
+              Деньги движутся напрямую между участниками — мы организуем и сопровождаем
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6 mb-20">
+          <div className="grid md:grid-cols-5 gap-4 mb-20">
             {[
-              { step: "01", icon: "UserCheck", title: "Верификация", desc: "Проходите KYC-проверку за 1–2 дня. Безопасность всех участников." },
-              { step: "02", icon: "Search", title: "Выбор проекта", desc: "Изучаете контракт, документацию, финансовую модель." },
-              { step: "03", icon: "FileSignature", title: "Договор", desc: "Подписываете инвестиционный договор с обеспечением." },
-              { step: "04", icon: "Banknote", title: "Доход", desc: "Получаете тело + прибыль по завершении контракта." },
+              { step: "01", icon: "FileCheck", title: "Есть контракт", desc: "Подрядчик выиграл тендер и обращается к нам за организацией финансирования" },
+              { step: "02", icon: "Search", title: "Подбор партнёра", desc: "Подбираем инвестора или партнёра под параметры конкретного проекта" },
+              { step: "03", icon: "FileSignature", title: "Договор", desc: "Стороны заключают договор напрямую: займ, поставка или агентская схема" },
+              { step: "04", icon: "HardHat", title: "Исполнение", desc: "Проект исполняется. Мы координируем взаимодействие сторон на всех этапах" },
+              { step: "05", icon: "Banknote", title: "Расчёт", desc: "По завершении контракта происходит расчёт между сторонами сделки" },
             ].map((s) => (
               <div key={s.step} className="card-invest p-6 relative">
                 <div className="absolute top-4 right-4 font-display text-4xl font-bold text-[hsl(var(--gold)/0.08)]">
                   {s.step}
                 </div>
                 <div className="w-10 h-10 flex items-center justify-center bg-[hsl(var(--gold)/0.12)] border border-[hsl(var(--gold)/0.2)] mb-4">
-                  <Icon name={s.icon as string} size={18} className="text-gold" />
+                  <Icon name={s.icon as string} size={18} className="text-gold" fallback="Star" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-2">{s.title}</h3>
+                <h3 className="font-display text-lg font-semibold mb-2">{s.title}</h3>
                 <p className="text-sm text-muted-foreground font-body leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Базовый",
-                min: "1 000 000 ₽",
-                rate: "от 25%",
-                term: "4–6 мес.",
-                features: ["Один проект", "Стандартная отчётность", "Чат поддержки"],
-                highlight: false,
-              },
-              {
-                title: "Профессиональный",
-                min: "5 000 000 ₽",
-                rate: "от 28%",
-                term: "4–8 мес.",
-                features: ["До 3 проектов", "Расширенная аналитика", "Личный консультант", "Приоритетный доступ"],
-                highlight: true,
-              },
-              {
-                title: "Институциональный",
-                min: "от 20 000 000 ₽",
-                rate: "от 32%",
-                term: "Индивидуально",
-                features: ["Неограниченно проектов", "Персональные условия", "Dedicated менеджер", "Ранний доступ к сделкам"],
-                highlight: false,
-              },
-            ].map((tier) => (
-              <div
-                key={tier.title}
-                className={`card-invest p-8 relative flex flex-col ${tier.highlight ? "border-gold ring-1 ring-[hsl(var(--gold)/0.3)]" : ""}`}
-              >
-                {tier.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="tag text-[10px]">Популярный</span>
+          {/* Кейс */}
+          <div className="border border-[hsl(var(--gold)/0.3)] bg-[hsl(var(--gold)/0.04)] p-8">
+            <div className="tag mb-4">Пример сделки</div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <div className="text-xs text-muted-foreground font-body uppercase tracking-widest mb-2">Контракт</div>
+                <div className="font-display text-4xl font-bold text-gold mb-1">50 млн ₽</div>
+                <div className="text-sm text-muted-foreground font-body">Инфраструктурный объект</div>
+              </div>
+              <div>
+                <div className="text-xs text-muted-foreground font-body uppercase tracking-widest mb-2">Финансирование</div>
+                <div className="font-display text-4xl font-bold mb-1">10 млн ₽</div>
+                <div className="text-sm text-muted-foreground font-body">Прямой договор сторон</div>
+              </div>
+              <div>
+                <div className="text-xs text-muted-foreground font-body uppercase tracking-widest mb-2">Срок</div>
+                <div className="font-display text-4xl font-bold mb-1">4 мес.</div>
+                <div className="text-sm text-muted-foreground font-body">От старта до расчёта</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" />
+
+      {/* WHO IT'S FOR */}
+      <section id="who" className="py-24 bg-card">
+        <div className="container max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="tag mb-5">Аудитория</div>
+            <h2 className="section-title">
+              Кому это{" "}
+              <span className="text-gold italic">подходит</span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <div className="card-invest p-8">
+              <div className="w-12 h-12 flex items-center justify-center bg-[hsl(var(--gold)/0.12)] border border-[hsl(var(--gold)/0.2)] mb-6">
+                <Icon name="Building2" size={22} className="text-gold" fallback="Star" />
+              </div>
+              <h3 className="font-display text-2xl font-semibold mb-2">Бизнесу</h3>
+              <p className="text-sm text-muted-foreground font-body mb-6">Подрядчикам и компаниям с контрактами</p>
+              <div className="space-y-3">
+                {[
+                  "Нужен оборотный капитал для исполнения контракта",
+                  "Требуется финансирование закупки оборудования",
+                  "Нужны банковские гарантии",
+                  "Ищете партнёра по совместному исполнению",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <Icon name="Check" size={14} className="text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-sm font-body text-muted-foreground">{item}</span>
                   </div>
-                )}
-                <div className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-2">{tier.title}</div>
-                <div className="font-display text-4xl font-bold text-gold mb-1">{tier.rate}</div>
-                <div className="text-sm text-muted-foreground font-body mb-1">годовых</div>
-                <div className="divider my-4" />
-                <div className="mb-1 text-sm font-body">
-                  <span className="text-muted-foreground">Минимум: </span>
-                  <span className="font-semibold">{tier.min}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="card-invest p-8 border-gold ring-1 ring-[hsl(var(--gold)/0.3)]">
+              <div className="w-12 h-12 flex items-center justify-center bg-[hsl(var(--gold)/0.12)] border border-[hsl(var(--gold)/0.2)] mb-6">
+                <Icon name="TrendingUp" size={22} className="text-gold" />
+              </div>
+              <h3 className="font-display text-2xl font-semibold mb-2">Инвесторам</h3>
+              <p className="text-sm text-muted-foreground font-body mb-6">Частным инвесторам и партнёрам</p>
+              <div className="space-y-3">
+                {[
+                  "Участие в реальных проектах реального сектора",
+                  "Сделки с понятной и прозрачной экономикой",
+                  "Индивидуальные условия под каждую сделку",
+                  "Участие после предварительного отбора",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <Icon name="Check" size={14} className="text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-sm font-body text-muted-foreground">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Преимущества */}
+          <div className="grid md:grid-cols-4 gap-6">
+            {[
+              { icon: "FileCheck", title: "Реальные контракты", desc: "Работаем только с действующими государственными и корпоративными контрактами" },
+              { icon: "Eye", title: "Прозрачная структура", desc: "Все условия согласовываются индивидуально и фиксируются в договоре" },
+              { icon: "Settings", title: "Индивидуальные условия", desc: "Параметры каждой сделки определяются под конкретный проект и стороны" },
+              { icon: "Shield", title: "Сопровождение", desc: "Координируем взаимодействие сторон на всех этапах исполнения" },
+            ].map((f) => (
+              <div key={f.title} className="card-invest p-6">
+                <div className="w-10 h-10 flex items-center justify-center bg-[hsl(var(--gold)/0.12)] border border-[hsl(var(--gold)/0.2)] mb-4">
+                  <Icon name={f.icon as string} size={18} className="text-gold" fallback="Star" />
                 </div>
-                <div className="mb-6 text-sm font-body">
-                  <span className="text-muted-foreground">Срок: </span>
-                  <span className="font-semibold">{tier.term}</span>
-                </div>
-                <ul className="space-y-2 mb-8 flex-1">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm font-body text-muted-foreground">
-                      <Icon name="Check" size={14} className="text-gold flex-shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  className={`w-full py-3 text-sm font-body font-semibold uppercase tracking-wider transition-all ${
-                    tier.highlight ? "btn-gold" : "btn-outline-gold"
-                  }`}
-                >
-                  Выбрать тариф
-                </button>
+                <h3 className="font-body font-semibold text-sm mb-2">{f.title}</h3>
+                <p className="text-xs text-muted-foreground font-body leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -347,7 +392,7 @@ export default function Index() {
         <div className="container max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <div className="tag mb-4">Активные проекты</div>
+              <div className="tag mb-4">Текущие проекты</div>
               <h2 className="section-title">
                 Открытые{" "}
                 <span className="text-gold italic">позиции</span>
@@ -438,9 +483,9 @@ export default function Index() {
                     </div>
                   </div>
 
-                  <button className="w-full py-2.5 border border-border text-xs font-body font-semibold uppercase tracking-wider text-muted-foreground hover:border-gold hover:text-gold transition-all">
-                    Подробнее о проекте
-                  </button>
+                  <a href="#contacts" className="block w-full py-2.5 border border-border text-xs font-body font-semibold uppercase tracking-wider text-center text-muted-foreground hover:border-gold hover:text-gold transition-all">
+                    Обсудить участие
+                  </a>
                 </div>
               ))}
             </div>
@@ -455,20 +500,23 @@ export default function Index() {
         <div className="container max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="tag mb-6">Калькулятор доходности</div>
+              <div className="tag mb-6">Калькулятор</div>
               <h2 className="section-title mb-4">
-                Рассчитайте{" "}
-                <span className="text-gold italic">вашу прибыль</span>
+                Оцените{" "}
+                <span className="text-gold italic">параметры</span>
               </h2>
-              <p className="text-muted-foreground font-body mb-10">
-                Используйте калькулятор, чтобы оценить потенциальный доход от инвестиций в контрактное финансирование.
+              <p className="text-muted-foreground font-body mb-4">
+                Финансовые условия и возможная доходность определяются параметрами конкретного проекта и согласовываются сторонами индивидуально.
+              </p>
+              <p className="text-xs text-muted-foreground font-body mb-10 border-l-2 border-[hsl(var(--gold)/0.4)] pl-4">
+                Калькулятор носит ориентировочный характер и не является публичной офертой.
               </p>
 
               <div className="space-y-8">
                 <div>
                   <div className="flex justify-between mb-3">
                     <label className="text-sm font-body font-semibold uppercase tracking-wider">
-                      Сумма инвестиций
+                      Объём участия
                     </label>
                     <span className="text-gold font-display text-lg font-semibold">
                       {formatMln(amount)}
@@ -491,20 +539,20 @@ export default function Index() {
                 <div>
                   <div className="flex justify-between mb-3">
                     <label className="text-sm font-body font-semibold uppercase tracking-wider">
-                      Ставка доходности
+                      Ориентир доходности
                     </label>
                     <span className="text-gold font-display text-lg font-semibold">{rate}%</span>
                   </div>
                   <input
                     type="range"
-                    min={25}
+                    min={20}
                     max={40}
                     step={1}
                     value={rate}
                     onChange={(e) => setRate(Number(e.target.value))}
                   />
                   <div className="flex justify-between text-xs text-muted-foreground font-body mt-1">
-                    <span>25%</span>
+                    <span>20%</span>
                     <span>40%</span>
                   </div>
                 </div>
@@ -512,7 +560,7 @@ export default function Index() {
                 <div>
                   <div className="flex justify-between mb-3">
                     <label className="text-sm font-body font-semibold uppercase tracking-wider">
-                      Срок инвестиций
+                      Срок проекта
                     </label>
                     <span className="text-gold font-display text-lg font-semibold">
                       {months} мес.
@@ -537,33 +585,33 @@ export default function Index() {
             <div className="space-y-4">
               <div className="bg-background border border-border p-8">
                 <div className="text-xs text-muted-foreground font-body uppercase tracking-widest mb-3">
-                  Ваша инвестиция
+                  Объём участия
                 </div>
                 <div className="font-display text-4xl font-bold mb-1">{formatMln(amount)}</div>
               </div>
 
               <div className="bg-[hsl(var(--gold)/0.08)] border border-[hsl(var(--gold)/0.3)] p-8">
                 <div className="text-xs text-gold font-body uppercase tracking-widest mb-3">
-                  Ваша прибыль за {months} месяцев
+                  Ориентир дохода за {months} месяцев
                 </div>
                 <div className="font-display text-5xl font-bold text-gold mb-2">
                   + {formatMln(profit)}
                 </div>
                 <div className="text-sm text-muted-foreground font-body">
-                  При ставке {rate}% годовых
+                  При ставке {rate}% годовых (ориентировочно)
                 </div>
               </div>
 
               <div className="bg-background border border-border p-8">
                 <div className="text-xs text-muted-foreground font-body uppercase tracking-widest mb-3">
-                  Итого на руки
+                  Итого (ориентировочно)
                 </div>
                 <div className="font-display text-4xl font-bold">{formatMln(total)}</div>
               </div>
 
-              <button className="btn-gold w-full text-center py-4 text-sm">
-                Инвестировать {formatMln(amount)}
-              </button>
+              <a href="#contacts" className="btn-gold w-full text-center py-4 text-sm block">
+                Обсудить условия
+              </a>
             </div>
           </div>
         </div>
@@ -575,19 +623,19 @@ export default function Index() {
       <section id="analytics" className="py-24 bg-background">
         <div className="container max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="tag mb-5">Аналитика платформы</div>
+            <div className="tag mb-5">Аналитика</div>
             <h2 className="section-title">
               Показатели{" "}
-              <span className="text-gold italic">эффективности</span>
+              <span className="text-gold italic">по проектам</span>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6 mb-16">
             {[
-              { num: "₽2.4 млрд", label: "Профинансировано контрактов", icon: "TrendingUp", change: "+18%" },
-              { num: "143", label: "Завершённых проектов", icon: "CheckCircle", change: "100% выплат" },
-              { num: "31.2%", label: "Средняя доходность", icon: "BarChart2", change: "+2.4% к прошлому кварталу" },
-              { num: "847", label: "Активных инвесторов", icon: "Users", change: "+124 за месяц" },
+              { num: "₽2.4 млрд", label: "Объём сопровождённых сделок", icon: "TrendingUp", change: "+18%" },
+              { num: "143", label: "Завершённых проектов", icon: "CheckCircle", change: "100% расчётов" },
+              { num: "4–8 мес.", label: "Средний срок сделки", icon: "BarChart2", change: "Строительство и СМР" },
+              { num: "50+ млн", label: "Максимальный контракт", icon: "Users", change: "Инфраструктура" },
             ].map((s) => (
               <div key={s.label} className="card-invest p-6">
                 <div className="flex items-center justify-between mb-4">
@@ -625,7 +673,7 @@ export default function Index() {
 
             <div className="card-invest p-8">
               <h3 className="font-display text-xl font-semibold mb-6">Доходность по кварталам</h3>
-              <div className="flex items-end gap-3 h-40">
+              <div className="flex items-end gap-2 h-40">
                 {[
                   { q: "Q1 24", pct: 72, val: "28.8%" },
                   { q: "Q2 24", pct: 78, val: "31.2%" },
@@ -651,91 +699,8 @@ export default function Index() {
 
       <div className="divider" />
 
-      {/* PORTFOLIO & DOCUMENTS */}
-      <section id="portfolio" className="py-24 bg-card">
-        <div className="container max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-start">
-            <div>
-              <div className="tag mb-5">Личный кабинет</div>
-              <h2 className="section-title mb-6">
-                Портфель и{" "}
-                <span className="text-gold italic">документы</span>
-              </h2>
-              <p className="text-muted-foreground font-body leading-relaxed mb-8">
-                Все инвестиции, договоры, финансовые отчёты и уведомления —
-                в едином защищённом кабинете инвестора.
-              </p>
-              <div className="space-y-3">
-                {[
-                  { icon: "Wallet", title: "Портфель инвестиций", desc: "Все активные и завершённые инвестиции" },
-                  { icon: "FileText", title: "Хранилище документов", desc: "Договоры, акты, отчёты по каждому проекту" },
-                  { icon: "BarChart3", title: "Финансовые отчёты", desc: "Ежеквартальная и годовая отчётность" },
-                  { icon: "Bell", title: "Система уведомлений", desc: "Обновления проектов, платежи, новости" },
-                  { icon: "MessageCircle", title: "Чат с консультантом", desc: "Ответы на вопросы в рабочие часы" },
-                ].map((f) => (
-                  <div key={f.title} className="flex items-center gap-4 p-4 bg-background border border-border hover:border-[hsl(var(--gold)/0.3)] transition-all group cursor-pointer">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[hsl(var(--gold)/0.1)] border border-[hsl(var(--gold)/0.2)] group-hover:bg-[hsl(var(--gold)/0.2)] transition-all">
-                      <Icon name={f.icon as string} size={16} className="text-gold" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold font-body">{f.title}</div>
-                      <div className="text-xs text-muted-foreground font-body">{f.desc}</div>
-                    </div>
-                    <Icon name="ChevronRight" size={14} className="text-muted-foreground group-hover:text-gold transition-all" />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="bg-background border border-border p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-body font-semibold uppercase tracking-wider">Мой портфель</span>
-                  <span className="tag">Демо-режим</span>
-                </div>
-                <div className="space-y-3">
-                  {projects.slice(0, 3).map((p) => (
-                    <div key={p.id} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                      <div>
-                        <div className="text-sm font-body font-medium">{p.name.slice(0, 30)}…</div>
-                        <div className="text-xs text-muted-foreground font-body">{p.term} · {p.category}</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-gold font-display text-lg font-semibold">{p.yield}</div>
-                        <div className="text-xs text-muted-foreground font-body">{p.status}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-background border border-border p-6">
-                <div className="text-sm font-body font-semibold uppercase tracking-wider mb-4">Последние уведомления</div>
-                <div className="space-y-3">
-                  {[
-                    { icon: "CheckCircle", text: "Выплата по проекту «Закуп техники» — ₽14.3M", time: "2 ч. назад", color: "text-green-400" },
-                    { icon: "Bell", text: "Новый проект: Электромонтажные работы АЭС", time: "1 день назад", color: "text-gold" },
-                    { icon: "FileText", text: "Добавлен ежеквартальный отчёт Q1 2025", time: "3 дня назад", color: "text-blue-400" },
-                  ].map((n, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <Icon name={n.icon as string} size={14} className={`${n.color} mt-0.5 flex-shrink-0`} />
-                      <div className="flex-1">
-                        <div className="text-xs font-body">{n.text}</div>
-                        <div className="text-xs text-muted-foreground font-body">{n.time}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="divider" />
-
       {/* FAQ */}
-      <section id="faq" className="py-24 bg-background">
+      <section id="faq" className="py-24 bg-card">
         <div className="container max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-14">
@@ -751,7 +716,7 @@ export default function Index() {
                 <div key={i} className="border border-border overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-6 text-left hover:bg-card transition-all"
+                    className="w-full flex items-center justify-between p-6 text-left hover:bg-background transition-all"
                   >
                     <span className="font-body font-semibold text-sm pr-4">{f.q}</span>
                     <Icon
@@ -775,111 +740,141 @@ export default function Index() {
       <div className="divider" />
 
       {/* CONTACTS */}
-      <section id="contacts" className="py-24 bg-card">
+      <section id="contacts" className="py-24 bg-background">
         <div className="container max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16">
             <div>
               <div className="tag mb-6">Контакты</div>
               <h2 className="section-title mb-6">
-                Начните{" "}
-                <span className="text-gold italic">сегодня</span>
+                Обсудим{" "}
+                <span className="text-gold italic">ваш проект</span>
               </h2>
               <p className="text-muted-foreground font-body leading-relaxed mb-10">
-                Оставьте заявку, и наш консультант свяжется с вами в течение
-                рабочего дня. Расскажем о текущих проектах и подберём
-                оптимальные условия.
+                Оставьте заявку, и мы свяжемся с вами для предварительного обсуждения. Рассматриваем как подрядчиков с контрактами, так и инвесторов и партнёров.
               </p>
-              <div className="space-y-4">
-                {[
-                  { icon: "Phone", label: "+7 (800) 000-00-00", sub: "Бесплатно, пн–пт 9:00–18:00" },
-                  { icon: "Mail", label: "invest@kontraktinvest.ru", sub: "Ответим в течение часа" },
-                  { icon: "MapPin", label: "Москва, Пресненская наб. 12", sub: "Башня Федерация, 55 этаж" },
-                ].map((c) => (
-                  <div key={c.label} className="flex items-center gap-4">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[hsl(var(--gold)/0.1)] border border-[hsl(var(--gold)/0.2)]">
-                      <Icon name={c.icon as string} size={16} className="text-gold" />
-                    </div>
-                    <div>
-                      <div className="font-body font-semibold text-sm">{c.label}</div>
-                      <div className="text-xs text-muted-foreground font-body">{c.sub}</div>
-                    </div>
+              <div className="space-y-4 mb-8">
+                <a
+                  href="https://t.me/kontraktinvest"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[hsl(var(--gold)/0.1)] border border-[hsl(var(--gold)/0.2)] group-hover:bg-[hsl(var(--gold)/0.2)] transition-all">
+                    <Icon name="Send" size={16} className="text-gold" />
                   </div>
-                ))}
+                  <div>
+                    <div className="text-sm font-semibold font-body group-hover:text-gold transition-colors">Telegram</div>
+                    <div className="text-xs text-muted-foreground font-body">@kontraktinvest</div>
+                  </div>
+                </a>
+                <a
+                  href="https://wa.me/79000000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-[hsl(var(--gold)/0.1)] border border-[hsl(var(--gold)/0.2)] group-hover:bg-[hsl(var(--gold)/0.2)] transition-all">
+                    <Icon name="MessageCircle" size={16} className="text-gold" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold font-body group-hover:text-gold transition-colors">WhatsApp</div>
+                    <div className="text-xs text-muted-foreground font-body">+7 (900) 000-00-00</div>
+                  </div>
+                </a>
+              </div>
+
+              <div className="border border-[hsl(var(--gold)/0.2)] bg-[hsl(var(--gold)/0.03)] p-5">
+                <p className="text-xs text-muted-foreground font-body leading-relaxed">
+                  <span className="text-gold font-semibold">Мы рассматриваем</span> инвесторов и партнёров для участия в проектах. Участие возможно после предварительного отбора и обсуждения условий сотрудничества.
+                </p>
               </div>
             </div>
 
-            <div className="bg-background border border-border p-8">
-              <h3 className="font-display text-2xl font-semibold mb-6">Оставить заявку</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-xs font-body font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
-                    Ваше имя
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Иван Петров"
-                    className="w-full bg-card border border-border px-4 py-3 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[hsl(var(--gold)/0.5)] transition-all"
-                  />
+            <div className="bg-card border border-border p-8">
+              {formSent ? (
+                <div className="h-full flex flex-col items-center justify-center text-center py-12">
+                  <div className="w-16 h-16 flex items-center justify-center bg-[hsl(var(--gold)/0.12)] border border-[hsl(var(--gold)/0.3)] mb-6">
+                    <Icon name="Check" size={28} className="text-gold" />
+                  </div>
+                  <h3 className="font-display text-2xl font-semibold mb-3">Заявка отправлена</h3>
+                  <p className="text-muted-foreground font-body text-sm">
+                    Мы свяжемся с вами в ближайшее время для предварительного обсуждения.
+                  </p>
                 </div>
-                <div>
-                  <label className="text-xs font-body font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
-                    Телефон
-                  </label>
-                  <input
-                    type="tel"
-                    placeholder="+7 (___) ___-__-__"
-                    className="w-full bg-card border border-border px-4 py-3 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[hsl(var(--gold)/0.5)] transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-body font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
-                    Сумма инвестиций
-                  </label>
-                  <select className="w-full bg-card border border-border px-4 py-3 text-sm font-body text-foreground focus:outline-none focus:border-[hsl(var(--gold)/0.5)] transition-all appearance-none">
-                    <option value="">Выберите диапазон</option>
-                    <option>1–5 млн ₽</option>
-                    <option>5–20 млн ₽</option>
-                    <option>20–100 млн ₽</option>
-                    <option>Более 100 млн ₽</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-xs font-body font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
-                    Комментарий
-                  </label>
-                  <textarea
-                    rows={3}
-                    placeholder="Ваши вопросы или пожелания"
-                    className="w-full bg-card border border-border px-4 py-3 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[hsl(var(--gold)/0.5)] transition-all resize-none"
-                  />
-                </div>
-                <button className="btn-gold w-full py-4">
-                  Отправить заявку
-                </button>
-                <p className="text-xs text-muted-foreground font-body text-center">
-                  Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
-                </p>
-              </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="mb-2">
+                    <div className="text-sm font-body font-semibold uppercase tracking-wider mb-1">Оставить заявку</div>
+                    <div className="text-xs text-muted-foreground font-body">Укажите как вас зовут и как с вами связаться</div>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground font-body uppercase tracking-wider block mb-2">Имя</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full bg-background border border-border px-4 py-3 text-sm font-body focus:outline-none focus:border-[hsl(var(--gold)/0.6)] transition-colors"
+                      placeholder="Ваше имя"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground font-body uppercase tracking-wider block mb-2">Телефон / Telegram</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.phone}
+                      onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full bg-background border border-border px-4 py-3 text-sm font-body focus:outline-none focus:border-[hsl(var(--gold)/0.6)] transition-colors"
+                      placeholder="+7 (___) ___-__-__"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground font-body uppercase tracking-wider block mb-2">Кратко о проекте или запросе</label>
+                    <textarea
+                      rows={4}
+                      value={formData.message}
+                      onChange={e => setFormData({ ...formData, message: e.target.value })}
+                      className="w-full bg-background border border-border px-4 py-3 text-sm font-body focus:outline-none focus:border-[hsl(var(--gold)/0.6)] transition-colors resize-none"
+                      placeholder="Подрядчик / Инвестор, объём, отрасль..."
+                    />
+                  </div>
+                  <button type="submit" className="btn-gold w-full py-4 text-sm">
+                    Отправить заявку
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10 bg-background border-t border-border">
+      <footer className="py-12 bg-card border-t border-border">
         <div className="container max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
             <div className="flex items-center gap-3">
               <div className="w-7 h-7 bg-gold flex items-center justify-center">
                 <span className="text-[10px] font-bold text-[hsl(var(--navy))] font-body">КИ</span>
               </div>
-              <span className="font-display text-lg font-semibold">КонтрактИнвест</span>
+              <div>
+                <span className="font-display text-lg font-semibold tracking-wide text-foreground">КонтрактИнвест</span>
+                <div className="text-xs text-muted-foreground font-body">ООО «Стайл»</div>
+              </div>
             </div>
-            <div className="text-xs text-muted-foreground font-body text-center">
-              © 2025 КонтрактИнвест. Инвестиционная деятельность сопряжена с рисками.
+            <div className="max-w-lg">
+              <p className="text-xs text-muted-foreground font-body leading-relaxed">
+                <span className="font-semibold text-foreground">Дисклеймер:</span> Информация на сайте не является публичной офертой и предложением к инвестированию. Все условия сотрудничества определяются индивидуально в рамках договорных отношений.
+              </p>
+            </div>
+          </div>
+          <div className="divider" />
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8">
+            <div className="text-xs text-muted-foreground font-body">
+              © 2025 ООО «Стайл». КонтрактИнвест — организатор сделок контрактного финансирования.
             </div>
             <div className="flex gap-6">
-              {["Политика", "Оферта", "Раскрытие"].map((l) => (
+              {["Политика конфиденциальности", "Оферта"].map((l) => (
                 <a key={l} href="#" className="text-xs text-muted-foreground hover:text-gold transition-colors font-body">
                   {l}
                 </a>

@@ -481,6 +481,9 @@ export default function Index() {
                     <div className="progress-bar">
                       <div className="progress-fill" style={{ width: `${p.progress}%` }} />
                     </div>
+                    {p.description && (
+                      <div className="text-xs text-muted-foreground font-body mt-2">{p.description}</div>
+                    )}
                   </div>
 
                   <a href="#contacts" className="block w-full py-2.5 border border-border text-xs font-body font-semibold uppercase tracking-wider text-center text-muted-foreground hover:border-gold hover:text-gold transition-all">

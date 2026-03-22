@@ -1,0 +1,1 @@
+UPDATE projects SET description = 'Завершение: 10 апреля' WHERE id = 4;
